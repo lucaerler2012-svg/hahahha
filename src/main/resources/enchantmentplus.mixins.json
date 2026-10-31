@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.enchantmentplus.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "AnvilMenuMixin",
+    "EnchantmentHelperMixin",
+    "EnchantmentMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,0 +1,52 @@
+name: Build
+
+# Baut die Mod automatisch bei jedem Push, Pull Request oder per Knopfdruck.
+# Die fertige JAR findest du danach unter: Actions -> (Lauf anklicken) -> Artifacts.
+# Bei einem Tag wie "v1.0.0" wird zusätzlich ein GitHub-Release mit der JAR erstellt.
+on:
+  push:
+    branches: [ "**" ]
+    tags: [ "v*" ]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@v4
+
+      - name: Java 25 installieren
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 25
+
+      # Funktioniert auch dann, wenn gradle-wrapper.jar fehlt.
+      - name: Gradle einrichten
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: 9.6.0
+
+      - name: Mod bauen
+        run: gradle build --stacktrace
+
+      - name: JAR als Download bereitstellen
+        uses: actions/upload-artifact@v4
+        with:
+          name: enchantmentplus-jar
+          path: |
+            build/libs/*.jar
+            !build/libs/*-sources.jar
+
+      - name: GitHub-Release erstellen (nur bei Tags)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            build/libs/*.jar
+            !build/libs/*-sources.jar

@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "enchantmentplus",
+  "version": "${version}",
+  "name": "Enchantment Plus",
+  "description": "Doppelte Maximal-Level für alle Verzauberungen, erweiterte Amboss-Kombinationen, skalierender Schärfe-Schaden und ein Kreativ-Tab mit allen Buch-Leveln.",
+  "authors": [
+    "EnchantmentPlus contributors"
+  ],
+  "contact": {
+    "homepage": "https://modrinth.com/",
+    "sources": "https://github.com/DEIN-NAME/enchantmentplus"
+  },
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.enchantmentplus.EnchantmentPlusMod"
+    ]
+  },
+  "mixins": [
+    "enchantmentplus.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "minecraft": "~${minecraft_version}",
+    "java": ">=25",
+    "fabric-api": "*"
+  }
+}
